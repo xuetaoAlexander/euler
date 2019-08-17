@@ -12,7 +12,7 @@ using namespace std;
 int prime[max_n + 5] = {0};
 int is_prime[max_n + 5] = {0};
 
-void init() {
+void init() {　//线性筛
     for (int i = 2; i <= max_n; ++i) {
         if (!prime[i]) is_prime[++prime[0]] = i;
         for (int j = 1; j <= prime[0]; ++j) {
@@ -24,10 +24,10 @@ void init() {
 }
 
 int is_val(int x) {
-    int digits = floor(log10(x)) + 1;
+    int digits = floor(log10(x)) + 1; // 求整数位数的公式实现
     int tmp = x;
     for (int i = 0; i < digits; ++i) {
-        tmp = (tmp % 10) * (int) pow(10, digits - 1) + tmp / 10;
+        tmp = (tmp % 10) * (int) pow(10, digits - 1) + tmp / 10; // 逐位翻转的实现
         if (prime[tmp]) return 0;
     }
 
