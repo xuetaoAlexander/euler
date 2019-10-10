@@ -18,20 +18,18 @@ void init() {
     for (int i = 2; i <= max_n; ++i) {
         if (!prime[i]) {
             prime[++prime[0]] = i;
-            f[i] = 2;
-            cnt[i] = 1;
+            f[i] = 2; // 素数的约数只有两个
         }
-
         for (int j = 1; j <= prime[0]; j++) {
             if (i * prime[j] > max_n) break;
             prime[i * prime[j]] = 1;
             if (i % prime[j] == 0) {
-                f[i * prime[j]] = f[i] / (cnt[i] + 1) * (cnt[i] + 2);
-                cnt[i * prime[j]] = cnt[i] + 1;
+                int a = i, cnt = 0;
+                while (a % prime[j] == 0) a /= prime[j], cnt++; //cnt为旧合数的prime[j]因子的幂次
+                f[i * prime[j]] = f[i] / (cnt + 1) * (cnt + 2); //新标记的合数和旧合数之间的因子满足这种关系
                 break;
             } else {
-                f[i * prime[j]] = f[i] * f[prime[j]];
-                cnt[i * prime[j]] = 1;
+                f[i * prime[j]] = f[i] * f[prime[j]]; // i和prime[j]互素
             }
         }
     }
